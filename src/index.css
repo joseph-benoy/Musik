@@ -1,0 +1,8 @@
+:root{
+    --primary:#e90c59;
+}
+html,body{
+    margin: 0rem !important;
+    padding: 0rem !important;
+    overflow-x: hidden;
+}
