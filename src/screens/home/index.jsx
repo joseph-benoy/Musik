@@ -6,6 +6,7 @@ import "./home.css";
 import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import All from "./All";
 function Home() {
     const state = useSelector((state)=>state.player)
     const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function Home() {
                                             <Add/>
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="all">
-                                            all
+                                            <All/>
                                         </Tab.Pane>
                                         <Tab.Pane eventKey="fav">
                                             fav
