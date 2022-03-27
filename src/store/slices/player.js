@@ -6,6 +6,7 @@ export const playerSlice = createSlice({
         play:false,
         loaded:false,
         loading:false,
+        repeat:true,
         audio:{
             url:"",
             title:"No song",
@@ -58,9 +59,13 @@ export const playerSlice = createSlice({
         },
         setFavCount:(state,action)=>{
             state.counter.fav = action.payload;
+        },
+        toggleRepeat:(state)=>{
+            const temp = state.loading;
+            state.loading = !temp;
         }
     }
 });
 
-export const {nextAll,prevAll,prevFav,nextFav,load,play,pause,toggleLoading,setAllCount,setFavCount,resetAllCount,resetFavCount} = playerSlice.actions;
+export const {toggleRepeat,nextAll,prevAll,prevFav,nextFav,load,play,pause,toggleLoading,setAllCount,setFavCount,resetAllCount,resetFavCount} = playerSlice.actions;
 export default playerSlice.reducer;

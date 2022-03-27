@@ -4,8 +4,8 @@ import React from "react";
 import { Heart, Trash } from "react-bootstrap-icons";
 import db from "../../services/db";
 import { useDispatch} from "react-redux";
-import { reload } from "../../store/slices/songs";
-import { load, toggleLoading } from "../../store/slices/player";
+import { reload, setFav } from "../../store/slices/songs";
+import { load, resetAllCount, resetFavCount, setAllCount, setFavCount, toggleLoading } from "../../store/slices/player";
 
 
 
@@ -60,6 +60,14 @@ function SongList({songs,fav}) {
     const playAudio = (index)=>{
         const song = songs[index];
         dispatch(toggleLoading());
+        if(fav){
+            dispatch(setFavCount(index));
+            dispatch(resetAllCount());
+        }
+        else{
+            dispatch(setAllCount(index));
+            dispatch(resetFavCount());
+        }
         youtubedl(song.URL, {
             dumpSingleJson: true,
             noWarnings: true,

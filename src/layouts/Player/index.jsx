@@ -1,40 +1,96 @@
-import { Col, Row ,Button, Container,Form} from "react-bootstrap";
+import { Col, Row ,Container} from "react-bootstrap";
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import "./player.css"
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { pause, play } from "../../store/slices/player";
+import { nextAll, nextFav, resetAllCount, resetFavCount} from "../../store/slices/player";
+import { toggleLoading ,setAllCount,setFavCount} from "../../store/slices/player";
+import { load } from "../../store/slices/player";
+
+
+const youtubedl = window.require('youtube-dl-exec');
+
+
 function Player() {
     const state = useSelector((state)=>state.player)
+    const songs = useSelector((state)=>state.songs)
     const dispatch = useDispatch();
-    const [progress,setProgress] = useState(0);
-    const audioRef = useRef();
-    const toggleAudio = ()=>{
-        if(state.play){
-            audioRef.current.pause();
-            dispatch(pause());
+    let song;
+    var fav = false;
+    var count;
+    const nextSong = ()=>{
+        if(state.counter.all!==-1){
+            dispatch(nextAll());
+            song = songs.allSongs[state.counter.all+1];
         }
         else{
-            dispatch(play());
-            audioRef.current.play();
+            fav=true;
+            dispatch(nextFav());
+            song = songs.fav[state.counter.fav+1];
         }
-    }
-    const updateBar = ()=>{
-        setProgress(Math.floor(audioRef.current.currentTime));
-    }
-    const resetControl = ()=>{
-        dispatch(pause());
-    }
-    const seekAudio = (e)=>{
-        setProgress(e.target.value);
-        audioRef.current.currentTime = progress;
-    }
-    const pauseAudioSeeking = ()=>{
-        audioRef.current.pause();
-    }
-    const playAudioSeeking = ()=>{
-        audioRef.current.play();
+        dispatch(toggleLoading());
+        try{
+            youtubedl(song.URL, {
+                dumpSingleJson: true,
+                noWarnings: true,
+                noCallHome: true,
+                noCheckCertificate: true,
+                preferFreeFormats: true,
+                youtubeSkipDashManifest: true,
+                referer: 'https://www.youtube.com/watch?v=6xKWiCMKKJg'
+                }).then((output)=>{
+    
+                    let audioObjects = output.requested_formats.filter((item)=>(item.format.includes("audio only")))
+                    const audioData = {
+                        title:output.title,
+                        duration:output.duration,
+                        thumbnail:output.thumbnail,
+                        url:audioObjects[0].url
+                    }
+                    dispatch(load(audioData))
+                    dispatch(toggleLoading());
+                })
+                .catch((e)=>{
+                    alert("Couldn't find the song!");
+                })
+        }
+        catch(e){
+            let temp;
+            if(fav){
+                dispatch(setFavCount(0));
+                temp = songs.fav[0];
+            }
+            else{
+                dispatch(setAllCount(0));
+                temp = songs.allSongs[0];
+            }
+            if(state.repeat){            
+                youtubedl(temp.URL, {
+                dumpSingleJson: true,
+                noWarnings: true,
+                noCallHome: true,
+                noCheckCertificate: true,
+                preferFreeFormats: true,
+                youtubeSkipDashManifest: true,
+                referer: 'https://www.youtube.com/watch?v=6xKWiCMKKJg'
+                }).then((output)=>{
+    
+                    let audioObjects = output.requested_formats.filter((item)=>(item.format.includes("audio only")))
+                    const audioData = {
+                        title:output.title,
+                        duration:output.duration,
+                        thumbnail:output.thumbnail,
+                        url:audioObjects[0].url
+                    }
+                    dispatch(load(audioData))
+                    dispatch(toggleLoading());
+                })
+                .catch((e)=>{
+                    alert("Couldn't find the song!");
+                })
+            }
+        }
     }
     return (
         <>
@@ -49,7 +105,7 @@ function Player() {
                     <AudioPlayer
                     showJumpControls
                     src={state.audio.url}
-                    onPlay={e => console.log("onPlay")}
+                    onEnded={nextSong}
                         />
                     </Col>
                 </Row>
