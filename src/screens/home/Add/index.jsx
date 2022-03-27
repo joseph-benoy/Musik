@@ -6,6 +6,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { load } from "../../../store/slices/player";
 import {FolderPlus} from "react-bootstrap-icons";
+import { AddToLib } from "../../../services/addToLIb";
+
+
 const youtubedl = window.require('youtube-dl-exec');
 
 function Add() {
@@ -78,7 +81,7 @@ function Add() {
             </Row>
             <Row>
                 <Col>
-                    {isLoaded?<Button variant="primary" className="addToLib"><FolderPlus/>Add to library</Button>:null}
+                    {isLoaded?<Button onClick={()=>AddToLib(state.audio.title,url)} variant="primary" className="addToLib"><FolderPlus/>Add to library</Button>:null}
                 </Col>
             </Row>
         </Container>

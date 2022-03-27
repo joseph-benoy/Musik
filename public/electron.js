@@ -1,6 +1,6 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-
+app.allowRendererProcessReuse = false;
 function createWindow () {
   const win = new BrowserWindow({
     title:"Musik",
@@ -29,7 +29,6 @@ app.whenReady().then(() => {
     }
   })
 })
-
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
