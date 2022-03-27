@@ -4,6 +4,7 @@ import { getAllSongs } from "../../../services/getAllSongs";
 import "./all.css";
 import React from "react";
 import db from "../../../services/db";
+import SongList from "../../../elements/SongList";
 
 function All() {
     const [songs,setSongs] = useState([]);
@@ -20,13 +21,7 @@ function All() {
             <Container fluid>
                 <Row>
                     <Col>
-                        <ListGroup className="songListWrapper">
-                            {
-                                songs.map((song)=>(
-                                    <ListGroupItem>{song.TITLE}</ListGroupItem>
-                                ))
-                            }
-                        </ListGroup>
+                            <SongList songs={songs}/>
                     </Col>
                 </Row>
             </Container>
