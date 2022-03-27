@@ -54,6 +54,7 @@ function Home() {
                             </Row>
                             <Row className="playerRow">
                                 <Col>
+                                    <div className={state.loading?"loader-line":null}></div>
                                     <Player/>
                                 </Col>
                             </Row>

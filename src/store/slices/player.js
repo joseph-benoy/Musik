@@ -5,6 +5,7 @@ export const playerSlice = createSlice({
     initialState:{
         play:false,
         loaded:false,
+        loading:false,
         audio:{
             url:"",
             title:"No song",
@@ -47,6 +48,10 @@ export const playerSlice = createSlice({
         },
         resetFavCount:(state)=>{
             state.counter.fav = -1;
+        },
+        toggleLoading:(state)=>{
+            const temp = state.loading;
+            state.loading = !temp;
         }
     }
 });

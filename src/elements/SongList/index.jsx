@@ -3,8 +3,14 @@ import "./songlist.css";
 import React from "react";
 import { Heart, Trash } from "react-bootstrap-icons";
 import db from "../../services/db";
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import { reload } from "../../store/slices/songs";
+import { load } from "../../store/slices/player";
+
+
+
+const youtubedl = window.require('youtube-dl-exec');
+
 function SongList({songs,fav}) {
     const dispatch = useDispatch();
     const deleteSong = (url)=>{
@@ -51,13 +57,43 @@ function SongList({songs,fav}) {
             }
         })
     }
+    const playAudio = (index)=>{
+        if(fav){
+
+        }
+        else{
+            const song = songs[index];
+            youtubedl(song.URL, {
+                dumpSingleJson: true,
+                noWarnings: true,
+                noCallHome: true,
+                noCheckCertificate: true,
+                preferFreeFormats: true,
+                youtubeSkipDashManifest: true,
+                referer: 'https://www.youtube.com/watch?v=6xKWiCMKKJg'
+                }).then((output)=>{
+
+                    let audioObjects = output.requested_formats.filter((item)=>(item.format.includes("audio only")))
+                    const audioData = {
+                        title:output.title,
+                        duration:output.duration,
+                        thumbnail:output.thumbnail,
+                        url:audioObjects[0].url
+                    }
+                    dispatch(load(audioData))
+                })
+                .catch((e)=>{
+                    alert("Couldn't find the song!");
+                })
+        }
+    }
     return ( 
         <ListGroup className="songListWrapper">
         {
-            songs.map((song)=>(
+            songs.map((song,index)=>(
                 <ListGroupItem action as="li"
                 className="d-flex justify-content-between align-items-start">
-                    <div className="ms-2 me-auto">
+                    <div className="ms-2 me-auto" onClick={()=>playAudio(index)}>
                         {song.TITLE}
                     </div>
                     {!fav?<Button variant="link" onClick={()=>addFav(song.TITLE,song.URL)}><Heart/></Button>:null}
