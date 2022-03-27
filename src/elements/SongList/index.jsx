@@ -35,7 +35,7 @@ function SongList({songs,fav}) {
                     <div className="ms-2 me-auto">
                         {song.TITLE}
                     </div>
-                    {!fav?<Button variant="link"><Heart/></Button>:null}
+                    {!fav?<Button variant="link" onClick={()=>addFav(song.TITLE,song.URL)}><Heart/></Button>:null}
                     <Button variant="link" onClick={()=>deleteSong(song.URL)}><Trash/></Button>
                 </ListGroupItem>
             ))
