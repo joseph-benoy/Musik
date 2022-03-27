@@ -18,7 +18,6 @@ function Player() {
     const dispatch = useDispatch();
     let song;
     var fav = false;
-    var count;
     const nextSong = ()=>{
         if(state.counter.all!==-1){
             dispatch(nextAll());
