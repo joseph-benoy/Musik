@@ -5,6 +5,7 @@ import "./add.css";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { load } from "../../../store/slices/player";
+import {FolderPlus} from "react-bootstrap-icons";
 const youtubedl = window.require('youtube-dl-exec');
 
 function Add() {
@@ -68,9 +69,14 @@ function Add() {
                         <Search/>
                         <p>Search for a song</p>
                     </Col>:<>
-                        <img src={state.audio.thumbnail} alt="youtube-thumbnail"/>
+                        <img className="thumbnail" src={state.audio.thumbnail} alt="youtube-thumbnail"/>
                     </>
                 }
+            </Row>
+            <Row>
+                <Col>
+                    {isLoaded?<Button variant="primary" className="addToLib"><FolderPlus/>Add to library</Button>:null}
+                </Col>
             </Row>
         </Container>
      );

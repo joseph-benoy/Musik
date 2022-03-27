@@ -1,0 +1,13 @@
+.thumbnail{
+    width: 22rem !important;
+    height: 12rem !important;
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+.addToLib{
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 1rem !important;
+}

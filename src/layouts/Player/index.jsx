@@ -47,6 +47,7 @@ function Player() {
                 <Row>
                     <Col>
                     <AudioPlayer
+                    showJumpControls
                     src={state.audio.url}
                     onPlay={e => console.log("onPlay")}
                         />
