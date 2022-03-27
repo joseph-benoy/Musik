@@ -55,7 +55,7 @@ function Add() {
                 <InputGroup className="mb-3">
                     <FormControl value={url} type="url" placeholder="Valid Youtube URL" onChange={(e)=>setUrl(e.target.value)}/>
                     <Button variant="primary" onClick={loadAudio}>
-                        <Play/>Play
+                        <Play/>
                     </Button>
                 </InputGroup>
                 </Col>
