@@ -2,6 +2,7 @@
 .contentRow{
     height: 65vh !important;
     padding-top: 1.5rem;
+    overflow-y: scroll !important;
 }
 .base{
     padding: 0rem !important;

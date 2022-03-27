@@ -1,5 +1,4 @@
 .songListWrapper{
-    overflow-y: auto !important;
     height: fit-content !important;
-    max-height: 60% !important;
+    max-height: 100% !important;
 }

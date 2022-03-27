@@ -26,6 +26,17 @@ function SongList({songs,fav}) {
             }
         })
     }
+    const removeFav = (url)=>{
+        const st = db.prepare("DELETE FROM FAV WHERE URL=?");
+        st.run(url,(error)=>{
+            if(error){
+                alert("Couldn't remove the song!");
+            }
+            else{
+                alert("Removed the song from favourates!");
+            }
+        })
+    }
     return ( 
         <ListGroup className="songListWrapper">
         {
@@ -36,7 +47,7 @@ function SongList({songs,fav}) {
                         {song.TITLE}
                     </div>
                     {!fav?<Button variant="link" onClick={()=>addFav(song.TITLE,song.URL)}><Heart/></Button>:null}
-                    <Button variant="link" onClick={()=>deleteSong(song.URL)}><Trash/></Button>
+                    <Button variant="link" onClick={fav?()=>removeFav(song.URL):()=>deleteSong(song.URL)}><Trash/></Button>
                 </ListGroupItem>
             ))
         }
