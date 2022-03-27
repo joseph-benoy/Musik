@@ -2,11 +2,11 @@
 .contentRow{
     height: 65vh !important;
     padding-top: 1.5rem;
-    overflow-y: scroll !important;
+    overflow-y: scroll;
 }
 .base{
     padding: 0rem !important;
-    overflow-y: hidden !important;
+    overflow-y: auto !important;
 }
 .playerRow{
     height: 35vh !important;
