@@ -4,7 +4,7 @@ import songReducer from "./slices/songs";
 const store = configureStore({
     reducer:{
         player:playerReducer,
-        song:songReducer
+        songs:songReducer
     }
 });
 

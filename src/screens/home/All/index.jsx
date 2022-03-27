@@ -1,27 +1,29 @@
 import { useEffect, useState } from "react";
-import { Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap";
-import { getAllSongs } from "../../../services/getAllSongs";
+import { Col, Container,Row } from "react-bootstrap";
 import "./all.css";
 import React from "react";
 import db from "../../../services/db";
 import SongList from "../../../elements/SongList";
+import { useDispatch, useSelector } from "react-redux";
+import { setAllSongs } from "../../../store/slices/songs";
 
 function All() {
-    const [songs,setSongs] = useState([]);
+    const songs = useSelector((state)=>state.songs);
+    const dispatch = useDispatch();
+    const [reload,setReload] = useState(false);
     useEffect(()=>{
-        let songs = [];
         db.all("SELECT * FROM ALL_SONGS",(error,rows)=>{
             if(!error){
-                setSongs(rows);
+                dispatch(setAllSongs(rows))
             }
         })
-    },[])
+    },[reload]);
     return ( 
         <>
             <Container fluid>
                 <Row>
                     <Col>
-                            <SongList songs={songs}/>
+                        <SongList songs={songs.allSongs} reload={()=>setReload(!reload)}/>
                     </Col>
                 </Row>
             </Container>

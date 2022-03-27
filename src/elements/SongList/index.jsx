@@ -3,7 +3,7 @@ import "./songlist.css";
 import React from "react";
 import { Heart, Trash } from "react-bootstrap-icons";
 import db from "../../services/db";
-function SongList({songs,fav}) {
+function SongList({songs,fav,reload}) {
     const deleteSong = (url)=>{
         const st = db.prepare("DELETE FROM ALL_SONGS WHERE URL=?");
         st.run(url,(error)=>{
@@ -12,6 +12,7 @@ function SongList({songs,fav}) {
             }
             else{
                 alert("Removed the song!");
+                reload();
             }
         })
     }
@@ -23,6 +24,7 @@ function SongList({songs,fav}) {
             }
             else{
                 alert("Added "+title+" to favourates!");
+                reload();
             }
         })
     }
@@ -34,6 +36,7 @@ function SongList({songs,fav}) {
             }
             else{
                 alert("Removed the song from favourates!");
+                reload();
             }
         })
     }

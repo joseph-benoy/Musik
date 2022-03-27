@@ -5,23 +5,26 @@ import "./fav.css";
 import React from "react";
 import db from "../../../services/db";
 import SongList from "../../../elements/SongList";
+import { useDispatch,useSelector } from "react-redux";
+import { setFav } from "../../../store/slices/songs";
 
 function Fav() {
-    const [songs,setSongs] = useState([]);
+    const [reload,setReload] = useState(false);
+    const songs = useSelector((state)=>state.songs);
+    const dispatch = useDispatch();
     useEffect(()=>{
-        let songs = [];
         db.all("SELECT * FROM FAV",(error,rows)=>{
             if(!error){
-                setSongs(rows);
+                dispatch(setFav(rows));
             }
         })
-    },[])
+    },[reload])
     return ( 
         <>
             <Container fluid>
                 <Row>
                     <Col>
-                            <SongList songs={songs} fav/>
+                            <SongList songs={songs.fav} fav reload={()=>setReload(!reload)}/>
                     </Col>
                 </Row>
             </Container>

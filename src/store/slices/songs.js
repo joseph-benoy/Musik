@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const songSlice = createSlice({
-    name:"song",
+    name:"songs",
     initialState:{
             allSongs:[],
             fav:[]
     },
     reducers:{
         setAllSongs:(state,action)=>{
-            state.allSongs = [...action.payload]
+            state.allSongs = action.payload;
         },
         setFav:(state,action)=>{
             state.fav = [...action.payload]
