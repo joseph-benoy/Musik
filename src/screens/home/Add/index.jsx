@@ -49,7 +49,7 @@ function Add() {
         }
     }
     return ( 
-        <Container>
+        <Container className="addWrapper">
             <Row>
                 <Col>
                 <InputGroup className="mb-3">
@@ -62,15 +62,18 @@ function Add() {
             </Row>
             <Row>
                 {
-                    isLoading?<img src="assets/spinners/spinner1.gif" alt="spinner"/>:null
+                    isLoading?<Col><img className="addSpinner" src="assets/spinners/spinner1.gif" alt="spinner"/></Col>:null
                 }
                 {
-                    !isLoaded?<Col>
+                    !isLoaded&&!isLoading?<Col>
                         <Search/>
                         <p>Search for a song</p>
-                    </Col>:<>
-                        <img className="thumbnail" src={state.audio.thumbnail} alt="youtube-thumbnail"/>
-                    </>
+                    </Col>:null
+                }
+                {
+                    isLoaded?<>
+                    <img className="thumbnail" src={state.audio.thumbnail} alt="youtube-thumbnail"/>
+                </>:null
                 }
             </Row>
             <Row>
