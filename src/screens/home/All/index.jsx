@@ -10,20 +10,19 @@ import { setAllSongs } from "../../../store/slices/songs";
 function All() {
     const songs = useSelector((state)=>state.songs);
     const dispatch = useDispatch();
-    const [reload,setReload] = useState(false);
     useEffect(()=>{
         db.all("SELECT * FROM ALL_SONGS",(error,rows)=>{
             if(!error){
                 dispatch(setAllSongs(rows))
             }
         })
-    },[reload]);
+    },[songs.reload]);
     return ( 
         <>
             <Container fluid>
                 <Row>
                     <Col>
-                        <SongList songs={songs.allSongs} reload={()=>setReload(!reload)}/>
+                        <SongList songs={songs.allSongs}/>
                     </Col>
                 </Row>
             </Container>

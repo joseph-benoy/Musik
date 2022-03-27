@@ -6,8 +6,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { load } from "../../../store/slices/player";
 import {FolderPlus} from "react-bootstrap-icons";
-import { AddToLib } from "../../../services/addToLIb";
-
+import { reload } from "../../../store/slices/songs";
+import db from "../../../services/db";
 
 const youtubedl = window.require('youtube-dl-exec');
 
@@ -50,6 +50,19 @@ function Add() {
         else{
             alert("Invalid Youtube URL!");
         }
+    }
+    const AddToLib = (title,url)=>{
+        let stmt = db.prepare('INSERT INTO ALL_SONGS(TITLE,URL) VALUES(?,?)');
+        stmt.run(title,url,(error)=>{
+            if(error){
+                alert("Couldn't add song to the library!");
+            }
+            else{
+                stmt.finalize();
+                alert("Added "+title+" to the library");
+                dispatch(reload());
+            }
+        })
     }
     return ( 
         <Container className="addWrapper">

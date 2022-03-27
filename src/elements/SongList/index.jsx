@@ -3,7 +3,10 @@ import "./songlist.css";
 import React from "react";
 import { Heart, Trash } from "react-bootstrap-icons";
 import db from "../../services/db";
-function SongList({songs,fav,reload}) {
+import { useDispatch } from "react-redux";
+import { reload } from "../../store/slices/songs";
+function SongList({songs,fav}) {
+    const dispatch = useDispatch();
     const deleteSong = (url)=>{
         const st = db.prepare("DELETE FROM ALL_SONGS WHERE URL=?");
         st.run(url,(error)=>{
@@ -11,8 +14,16 @@ function SongList({songs,fav,reload}) {
                 alert("Couldn't remove the song!");
             }
             else{
-                alert("Removed the song!");
-                reload();
+                const stf = db.prepare("DELETE FROM FAV WHERE URL=?");
+                stf.run(url,(error)=>{
+                    if(error){
+                        alert("Couldn't remove the song!");
+                    }
+                    else{
+                        alert("Removed the song!");
+                        dispatch(reload());
+                    }
+                })
             }
         })
     }
@@ -24,7 +35,7 @@ function SongList({songs,fav,reload}) {
             }
             else{
                 alert("Added "+title+" to favourates!");
-                reload();
+                dispatch(reload());
             }
         })
     }
@@ -36,7 +47,7 @@ function SongList({songs,fav,reload}) {
             }
             else{
                 alert("Removed the song from favourates!");
-                reload();
+                dispatch(reload());
             }
         })
     }

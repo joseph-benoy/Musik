@@ -18,13 +18,13 @@ function Fav() {
                 dispatch(setFav(rows));
             }
         })
-    },[reload])
+    },[songs.reload])
     return ( 
         <>
             <Container fluid>
                 <Row>
                     <Col>
-                            <SongList songs={songs.fav} fav reload={()=>setReload(!reload)}/>
+                            <SongList songs={songs.fav} fav/>
                     </Col>
                 </Row>
             </Container>

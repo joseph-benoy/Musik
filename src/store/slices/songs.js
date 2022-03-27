@@ -4,7 +4,8 @@ export const songSlice = createSlice({
     name:"songs",
     initialState:{
             allSongs:[],
-            fav:[]
+            fav:[],
+            reload:false
     },
     reducers:{
         setAllSongs:(state,action)=>{
@@ -12,9 +13,13 @@ export const songSlice = createSlice({
         },
         setFav:(state,action)=>{
             state.fav = [...action.payload]
+        },
+        reload:(state)=>{
+            const temp = state.reload;
+            state.reload = !temp;
         }
     }
 });
 
-export const {setAllSongs,setFav} = songSlice.actions;
+export const {setAllSongs,setFav,reload} = songSlice.actions;
 export default songSlice.reducer;
