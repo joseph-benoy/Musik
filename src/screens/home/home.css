@@ -1,6 +1,7 @@
 
 .contentRow{
     height: 70vh !important;
+    padding-top: 1.5rem;
 }
 .base{
     padding: 0rem !important;

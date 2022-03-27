@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
-import { Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { getAllSongs } from "../../../services/getAllSongs";
 import "./all.css";
 import React from "react";
+import db from "../../../services/db";
 
 function All() {
     const [songs,setSongs] = useState([]);
     useEffect(()=>{
-        getAllSongs();
+        let songs = [];
+        db.all("SELECT * FROM ALL_SONGS",(error,rows)=>{
+            if(!error){
+                setSongs(rows);
+            }
+        })
     },[])
     return ( 
         <>
@@ -16,7 +22,9 @@ function All() {
                     <Col>
                         <ListGroup>
                             {
-
+                                songs.map((song)=>(
+                                    <ListGroupItem>{song.TITLE}</ListGroupItem>
+                                ))
                             }
                         </ListGroup>
                     </Col>
