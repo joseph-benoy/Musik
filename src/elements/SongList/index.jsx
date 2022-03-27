@@ -2,7 +2,30 @@ import { ListGroup,ListGroupItem,Button } from "react-bootstrap";
 import "./songlist.css";
 import React from "react";
 import { Heart, Trash } from "react-bootstrap-icons";
-function SongList({songs}) {
+import db from "../../services/db";
+function SongList({songs,fav}) {
+    const deleteSong = (url)=>{
+        const st = db.prepare("DELETE FROM ALL_SONGS WHERE URL=?");
+        st.run(url,(error)=>{
+            if(error){
+                alert("Couldn't remove the song!");
+            }
+            else{
+                alert("Removed the song!");
+            }
+        })
+    }
+    const addFav = (title,url)=>{
+        const st = db.prepare("INSERT INTO FAV(TITLE,URL) VALUES(?,?)");
+        st.run(title,url,(error)=>{
+            if(error){
+                alert("Couldn't add the song!");
+            }
+            else{
+                alert("Added "+title+" to favourates!");
+            }
+        })
+    }
     return ( 
         <ListGroup className="songListWrapper">
         {
@@ -12,8 +35,8 @@ function SongList({songs}) {
                     <div className="ms-2 me-auto">
                         {song.TITLE}
                     </div>
-                    <Button variant="link"><Heart/></Button>
-                    <Button variant="link"><Trash/></Button>
+                    {!fav?<Button variant="link"><Heart/></Button>:null}
+                    <Button variant="link" onClick={()=>deleteSong(song.URL)}><Trash/></Button>
                 </ListGroupItem>
             ))
         }
