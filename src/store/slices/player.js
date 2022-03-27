@@ -52,9 +52,15 @@ export const playerSlice = createSlice({
         toggleLoading:(state)=>{
             const temp = state.loading;
             state.loading = !temp;
+        },
+        setAllCount:(state,action)=>{
+            state.counter.all = action.payload;
+        },
+        setFavCount:(state,action)=>{
+            state.counter.fav = action.payload;
         }
     }
 });
 
-export const {load,play,pause} = playerSlice.actions;
+export const {nextAll,prevAll,prevFav,nextFav,load,play,pause,toggleLoading,setAllCount,setFavCount,resetAllCount,resetFavCount} = playerSlice.actions;
 export default playerSlice.reducer;
