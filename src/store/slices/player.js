@@ -10,6 +10,10 @@ export const playerSlice = createSlice({
             title:"No song",
             duration:0,
             thumbnail:""
+        },
+        counter:{
+            all:-1,
+            fav:-1
         }
     },
     reducers:{
@@ -25,6 +29,24 @@ export const playerSlice = createSlice({
         },
         pause:(state)=>{
             state.play = false;
+        },
+        nextAll:(state)=>{
+            state.counter.all+=1;
+        },
+        prevAll:(state)=>{
+            state.counter.all-=1;
+        },
+        nextFav:(state)=>{
+            state.counter.fav+=1;
+        },
+        prevFav:(state)=>{
+            state.counter.fav-=1;
+        },
+        resetAllCount:(state)=>{
+            state.counter.all = -1;
+        },
+        resetFavCount:(state)=>{
+            state.counter.fav = -1;
         }
     }
 });
