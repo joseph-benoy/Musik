@@ -20,7 +20,7 @@ function All() {
             <Container fluid>
                 <Row>
                     <Col>
-                        <ListGroup>
+                        <ListGroup className="songListWrapper">
                             {
                                 songs.map((song)=>(
                                     <ListGroupItem>{song.TITLE}</ListGroupItem>

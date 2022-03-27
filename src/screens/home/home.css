@@ -1,8 +1,13 @@
 
 .contentRow{
-    height: 70vh !important;
+    height: 65vh !important;
     padding-top: 1.5rem;
 }
 .base{
     padding: 0rem !important;
+    overflow-y: hidden !important;
+}
+.playerRow{
+    height: 35vh !important;
+    margin-top: 2rem !important;
 }

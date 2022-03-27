@@ -51,8 +51,10 @@ function Home() {
                                     </Tab.Content>
                                 </Col>
                             </Row>
-                            <Row>
-                                <Player/>
+                            <Row className="playerRow">
+                                <Col>
+                                    <Player/>
+                                </Col>
                             </Row>
                         </Col>
                     </Row>

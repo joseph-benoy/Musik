@@ -5,4 +5,5 @@ html,body{
     margin: 0rem !important;
     padding: 0rem !important;
     overflow-x: hidden;
+    overflow-y: hidden !important;
 }
